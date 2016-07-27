@@ -452,11 +452,13 @@
     // Also - this is required for the PDF/User-Agent bug work-around.
     self.inAppBrowserViewController = nil;
     
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < 90000
     if (IsAtLeastiOSVersion(@"7.0")) {
         if (_previousStatusBarStyle != -1) {
             [[UIApplication sharedApplication] setStatusBarStyle:_previousStatusBarStyle];
         }
     }
+#endif
     
     _previousStatusBarStyle = -1; // this value was reset before reapplying it. caused statusbar to stay black on ios7
 }
@@ -808,9 +810,11 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < 90000
     if (IsAtLeastiOSVersion(@"7.0")) {
         [[UIApplication sharedApplication] setStatusBarStyle:[self preferredStatusBarStyle]];
     }
+#endif
     [self rePositionViews];
     
     [super viewWillAppear:animated];
